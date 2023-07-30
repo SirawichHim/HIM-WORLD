@@ -138,6 +138,8 @@ ORDER BY late_fines_dollar DESC
 LIMIT 10
 
 ---- Update and resolve ------
+---- Update and resolve ------
+
 WITH borrowed_info AS (
  SELECT
   f.title AS film_title,
@@ -170,8 +172,21 @@ JOIN staff AS s ON r.staff_id = s.staff_id
 JOIN store AS st ON s.store_id = st.store_id
 JOIN address AS a1 ON st.address_id = a1.address_id
 ORDER BY film_title
-)
-SELECT *,
+),
+late_fines AS 
+  (
+  SELECT ROW_NUMBER () OVER (ORDER BY film_title) AS list,
+  *, 
 	ROUND(number_borrowed_days *1.23,3) AS late_fines_dollar
     FROM borrowed_info
+ORDER BY late_fines_dollar DESC
+LIMIT 10
+  )
+
+SELECT 
+SUM (late_fines_dollar),
+AVG (late_fines_dollar),
+MAX (late_fines_dollar),
+MIN (late_fines_dollar)
+FROM late_fines;
 
