@@ -138,7 +138,6 @@ ORDER BY late_fines_dollar DESC
 LIMIT 10
 
 ---- Update and resolve ------
----- Update and resolve ------
 
 WITH borrowed_info AS (
  SELECT
