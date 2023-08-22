@@ -1,0 +1,32 @@
+# OBJECTIVE : I created this code for combine several CSV file in Folder to 1 Excel.
+# REASON : I was too lazy to copy the CSV file and insert each sheet in Excel.
+Sub CombineCSVFiles()
+    Dim FolderPath As String
+    Dim FileNames() As Variant
+    Dim NextRow As Long
+    Dim ws As Worksheet
+    Dim i As Long
+    Dim srcWB As Workbook
+
+    # Avoid anything that slow down running code.
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+
+    # FolderPath = "Your Folder"
+    FolderPath = "C:\Users\Hims\Desktop\Sakila\"
+
+    # FileNames = All of your Filename in Folder above  
+    FileNames = Array("actor.csv", "address.csv", "category.csv", "city.csv", "country.csv", "customer.csv", "film.csv", "filmactor.csv", "filmcategory.csv", "inventory.csv", "language.csv", "paymenta.csv", "paymentb.csv", "paymentc.csv", "paymentd.csv", "paymente.csv", "rental.csv", "staff.csv", "store.csv")
+    For i = 0 To UBound(FileNames)
+        Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+        # -4 because delete .CSV = 4 letters
+        ws.Name = Left(FileNames(i), Len(FileNames(i)) - 4)
+        NextRow = 1
+        Set srcWB = Workbooks.Open(FolderPath & FileNames(i))
+        srcWB.Sheets(1).UsedRange.Copy Destination:=ws.Cells(NextRow, 1)
+        srcWB.Close False
+    Next i
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+END Sub
+End Sub
