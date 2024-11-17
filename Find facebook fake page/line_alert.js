@@ -1,7 +1,7 @@
 function onEdit(e) {
   const sheet = e.source.getActiveSheet();
   const sheetName = sheet.getName();
-  #Select the desired column when data is added.
+  //Select the desired column when data is added.
   const columnsToCheck = [1, 2, 3, 4]; // Columns A, B, C, D
 
   if (sheetName === 'Monitoring') {
@@ -21,7 +21,7 @@ function onEdit(e) {
           const pageName = values[1];
           const pageLink = values[2];
           const pageLike = values[3];
-      #Message on line notification alert
+      //Message on line notification alert
           const message = `
             **Order:** ${row}
             **Page:** ${pageName}
